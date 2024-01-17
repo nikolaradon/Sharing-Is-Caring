@@ -1,17 +1,14 @@
+{% extends 'base.html' %}
+
 {% block nav_actions %}
-        <a href="#">Zaloguj</a></li>
+  <header>
+    <nav class="container container--70">
+      <ul class="nav--actions">
+        <li><a href="#">Zaloguj</a></li>
         <li class="highlighted"><a href="#">Załóż konto</a></li>
-    </ul>
+      </ul>
 {% endblock %}
           
-{% block nav_links %}
-    <ul>
-          <li><a href="#">Start</a></li>
-          <li><a href="#">O co chodzi?</a></li>
-          <li><a href="#">O nas</a></li>
-          <li><a href="#">Fundacje i organizacje</a></li>
-          <li><a href="#">Kontakt</a></li>
-{% endblock %}
 
 {% block content %}
         <section class="login-page">

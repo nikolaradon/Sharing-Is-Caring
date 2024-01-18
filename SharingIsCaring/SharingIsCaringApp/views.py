@@ -7,12 +7,12 @@ from django.views import View
 
 class LandingPageView(View):
     def get(self, request):
-        return render(request, 'index2.html')
+        return render(request, 'index.html')
 
 
 class AddDonationView(View):
     def get(self, request):
-        return render(request, 'form2.html')
+        return render(request, 'form.html')
 
 
 class LoginView(View):
@@ -39,4 +39,4 @@ class HelpView(View):
 
 class FormConfirmationView(View):
     def get(self, request):
-        return render(request, 'form-confirmation2.html')
+        return render(request, 'form-confirmation.html')

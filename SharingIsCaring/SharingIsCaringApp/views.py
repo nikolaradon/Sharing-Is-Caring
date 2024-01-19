@@ -34,19 +34,3 @@ class RegisterView(View):
     def get(self, request):
         return render(request, 'register.html')
 
-
-class StepsView(View):
-    pass
-
-
-class AboutUsView(View):
-    pass
-
-
-class HelpView(View):
-    pass
-
-
-class FormConfirmationView(View):
-    def get(self, request):
-        return render(request, 'form-confirmation.html')

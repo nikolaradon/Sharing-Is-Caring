@@ -19,12 +19,12 @@
     {% endblock %}
 
         <ul>
-          <li><a href="" class="btn btn--without-border active">Start</a></li>
-          <li><a href="/#steps" class="btn btn--without-border">What's it about?</a></li>
-          <li><a href="/#about-us" class="btn btn--without-border">About us</a></li>
-          <li><a href="/#help" class="btn btn--without-border">Foundations and organizations</a></li>
-          <li><a href="form.html" class="btn btn--without-border">Donate goods</a></li>
-          <li><a href="/#contact" class="btn btn--without-border">Contact</a></li>
+          <li><a href="/" class="btn btn--without-border active">Start</a></li>
+          <li><a href="{% url 'index' %}#steps" class="btn btn--without-border">What's it about?</a></li>
+          <li><a href="{% url 'index' %}#about-us" class="btn btn--without-border">About us</a></li>
+          <li><a href="{% url 'index' %}#help" class="btn btn--without-border">Foundations and organizations</a></li>
+          <li><a href="{% url 'form' %}" class="btn btn--without-border">Donate goods</a></li>
+          <li><a href="{% url 'index' %}#contact" class="btn btn--without-border">Contact</a></li>
         </ul>
       </nav>
 
@@ -32,7 +32,7 @@
     {% block content %}{% endblock %}
 
     <footer>
-        <div class="contact">
+        <div id = "contact" class="contact">
             <h2>Contact us</h2>
             <h3>Contact form</h3>
             <form>

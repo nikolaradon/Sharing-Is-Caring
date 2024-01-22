@@ -13,22 +13,29 @@
 {% block content %}
   <section class="login-page">
     <h2>Create an account</h2>
-    <form>
+    <form method="post" action="{% url 'register' %}">
+      {% csrf_token %}
+
       <div class="form-group">
-        <input type="text" name="name" placeholder="First Name" />
-      </div>
+        <input type="email" name="{{ form.email.name }}" placeholder="Email" />
+        {{ form.email.errors }}
+      </div><br>
       <div class="form-group">
-        <input type="text" name="surname" placeholder="Last Name" />
-      </div>
+        <input type="password" name="{{ form.password1.name }}" placeholder="Password" />
+        {{ form.password1.errors }}
+      </div><br>
       <div class="form-group">
-        <input type="email" name="email" placeholder="Email" />
-      </div>
+        <input type="password" name="{{ form.password2.name }}" placeholder="Repeat Password" />
+        {{ form.password2.errors }}
+      </div><br>
       <div class="form-group">
-        <input type="password" name="password" placeholder="Password" />
-      </div>
+        <input type="text" name="{{ form.first_name.name }}" placeholder="First Name" />
+        {{ form.first_name.errors }}
+      </div><br>
       <div class="form-group">
-        <input type="password" name="password2" placeholder="Repeat Password" />
-      </div>
+        <input type="text" name="{{ form.last_name.name }}" placeholder="Last Name" />
+        {{ form.last_name.errors }}
+      </div><br>
 
       <div class="form-group form-group--buttons">
         <a href="{% url 'login' %}" class="btn btn--without-border">Log in</a>

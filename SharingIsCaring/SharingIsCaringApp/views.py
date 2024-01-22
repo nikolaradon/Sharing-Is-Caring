@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.db import IntegrityError
+from django.shortcuts import render, redirect
 from django.views import View
 from django.db.models import Sum
 from .models import Donation, Institution
+from .forms import RegisterForm
 
 
 # Create your views here.
@@ -40,5 +42,19 @@ class LoginView(View):
 
 class RegisterView(View):
     def get(self, request):
-        return render(request, 'register.html')
+            form = RegisterForm()
+            return render(request, "register.html", {'form': form})
+
+    def post(self, request):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            try:
+                user = form.save(commit=False)
+                user.username = form.cleaned_data['email']
+                user.save()
+                return redirect('login')
+            except IntegrityError:
+                form.add_error('email', 'User with this email is already registered')
+
+        return render(request, "register.html", {'form': form})
 

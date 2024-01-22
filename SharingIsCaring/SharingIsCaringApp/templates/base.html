@@ -13,8 +13,19 @@
         <header class="header--main-page">
             <nav class="container container--70">
                 <ul class="nav--actions">
-                    <li><a href="{% url 'login' %}" class="btn btn--small btn--without-border">Log in</a></li>
-                    <li><a href="{% url 'register' %}" class="btn btn--small btn--highlighted">Sign up</a></li>
+                    {% if request.user.is_authenticated %}
+                        <li class="logged-user">
+                            Hello {{ request.user.first_name}}
+                            <ul class="dropdown">
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Settings</a></li>
+                                <li><a href="{% url 'logout' %}">Log Out</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}" class="btn btn--small btn--without-border">Log in</a></li>
+                        <li><a href="{% url 'register' %}" class="btn btn--small btn--highlighted">Sign up</a></li>
+                    {% endif %}
                 </ul>
     {% endblock %}
 
@@ -28,6 +39,16 @@
         </ul>
       </nav>
 
+    
+    {% block messages %}
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <p{% if message.tags %} class="message {{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endblock %}
 
     {% block content %}{% endblock %}
 

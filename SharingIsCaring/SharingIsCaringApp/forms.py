@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Donation
 
 class RegisterForm(UserCreationForm):
     class Meta:
@@ -11,3 +12,9 @@ class RegisterForm(UserCreationForm):
 class LoginForm(forms.Form):
     email = forms.EmailField(label="Email", widget=forms.EmailInput(attrs={'autofocus': True, 'placeholder': 'Email'}))
     password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+
+
+class DonationForm(forms.ModelForm):
+    class Meta:
+        model = Donation
+        fields = '__all__'

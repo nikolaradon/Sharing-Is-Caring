@@ -2,11 +2,12 @@ from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.views import View
 from django.db.models import Sum
-from .models import Donation, Institution
+from .models import Donation, Institution, Category
 from .forms import RegisterForm, LoginForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 
@@ -34,9 +35,14 @@ class LandingPageView(View):
         return render(request, 'index.html', context)
 
 
-class AddDonationView(View):
+class AddDonationView(LoginRequiredMixin, View):
+    login_url = 'login' 
+
     def get(self, request):
-        return render(request, 'form.html')
+        categories = Category.objects.all()
+        insitutions = Institution.objects.all()
+        return render(request, 'form.html', {'categories': categories, 'institutions': insitutions})
+    
 
 
 class LoginView(View):
@@ -85,3 +91,8 @@ class RegisterView(View):
 def logout_view(request):
     logout(request)
     return redirect('index')
+
+
+class UserProfileView(View):
+    def get(self, request):
+        return render(request, 'user_profile.html', {'user': request.user})

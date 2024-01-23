@@ -19,10 +19,7 @@ class Institution(models.Model):
     description = models.TextField()
     type = models.CharField(max_length=30, choices=INSTITUTION_TYPES, default='fundacja')
     categories = models.ManyToManyField(Category)
-
-
-from django.db import models
-from django.contrib.auth.models import User
+    
 
 
 class Donation(models.Model):

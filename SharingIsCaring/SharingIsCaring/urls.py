@@ -21,7 +21,7 @@ from SharingIsCaringApp.views import (LandingPageView, AddDonationView, LoginVie
                                       )
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('', LandingPageView.as_view(), name='index'),
     path('add_donation/', AddDonationView.as_view(), name='form'),
     path('login/', LoginView.as_view(), name='login'),

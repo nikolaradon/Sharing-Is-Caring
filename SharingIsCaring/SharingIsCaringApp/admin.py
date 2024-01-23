@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Institution
+from .models import Institution, Category
 
 # Register your models here.
 
@@ -11,3 +11,8 @@ class InstitutionAdmin(admin.ModelAdmin):
 
     def display_categories(self, obj):
             return ", ".join([category.name for category in obj.categories.all()])
+    
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+      list_display = ('name',)
+      

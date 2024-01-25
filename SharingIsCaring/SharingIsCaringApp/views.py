@@ -135,4 +135,5 @@ def logout_view(request):
 
 class UserProfileView(View):
     def get(self, request):
-        return render(request, 'user_profile.html', {'user': request.user})
+        user_donations = Donation.objects.filter(user=request.user)
+        return render(request, 'user_profile.html', {'user': request.user, 'user_donations': user_donations})

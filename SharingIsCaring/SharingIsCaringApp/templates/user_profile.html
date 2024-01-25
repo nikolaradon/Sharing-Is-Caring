@@ -7,4 +7,20 @@
         <p><strong>Last Name:</strong> {{ user.last_name }}</p>
         <p><strong>Email:</strong> {{ user.email }}</p>
     </section>
+
+    <h2>Your Donations:</h2>
+        <ul>
+        {% for donation in donations %}
+            <li>
+            Bags: {{ donation.quantity }},
+            Organization: {{ donation.institution.name }},
+            Categories: {% for category in donation.categories.all %}
+                            {{ category.name }}, 
+                        {% endfor %}
+            Pick-up Date: {{ donation.pick_up_date }},
+            Pick-up Time: {{ donation.pick_up_time }}
+            </li>
+        {% endfor %}
+        </ul>
+
 {% endblock %}

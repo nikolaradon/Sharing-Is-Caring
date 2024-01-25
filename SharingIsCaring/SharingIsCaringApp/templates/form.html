@@ -52,7 +52,8 @@
       <div class="form--steps-container">
         <div class="form--steps-counter">Step <span>1</span>/5</div>
 
-        <form action="form-confirmation.html" method="post">
+        <form action="{% url 'form' %}" method="post">
+          {% csrf_token %}
           <!-- STEP 1: class .active is switching steps -->
           <div data-step="1" class="active">
             <h3>Select what you want to donate:</h3>
@@ -94,7 +95,7 @@
             {% for institution in institutions %}
                 <div class="form-group form-group--checkbox" data-categories="{{ institution.categories.all|join:", " }}">
                     <label>
-                        <input type="radio" name="organization" value="{{ institution.id }}" />
+                        <input type="radio" name="instituition" value="{{ institution.id }}" />
                         <span class="checkbox radio"></span>
                         <span class="description">
                             <div class="title">{{ institution.name }}</div>
@@ -162,14 +163,14 @@
               <button type="button" class="btn next-step">Next</button>
             </div>
           </div>
-          
+
           <!-- STEP 6 -->
           <div data-step="5">
-            <h3>Podsumowanie Twojej darowizny</h3>
+            <h3>Summary of your donation</h3>
 
             <div class="summary">
               <div class="form-section">
-                <h4>Oddajesz:</h4>
+                <h4>You give away:</h4>
                 <ul>
                   <li>
                     <span class="icon icon-bag"></span>
@@ -189,7 +190,7 @@
 
               <div class="form-section form-section--columns">
                 <div class="form-section--column">
-                  <h4>Adres odbioru:</h4>
+                  <h4>Pick up adress:</h4>
                   <ul>
                     <li>Prosta 51</li>
                     <li>Warszawa</li>
@@ -199,7 +200,7 @@
                 </div>
 
                 <div class="form-section--column">
-                  <h4>Termin odbioru:</h4>
+                  <h4>Pick up date:</h4>
                   <ul>
                     <li>13/12/2018</li>
                     <li>15:40</li>
@@ -210,8 +211,8 @@
             </div>
 
             <div class="form-group form-group--buttons">
-              <button type="button" class="btn prev-step">Wstecz</button>
-              <button type="submit" class="btn">Potwierdzam</button>
+              <button type="button" class="btn prev-step">Back</button>
+              <button type="submit" class="btn confirm-step">Confim</button>
             </div>
           </div>
         </form>

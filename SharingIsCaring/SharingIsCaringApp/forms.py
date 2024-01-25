@@ -14,7 +14,3 @@ class LoginForm(forms.Form):
     password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
 
-class DonationForm(forms.ModelForm):
-    class Meta:
-        model = Donation
-        fields = '__all__'

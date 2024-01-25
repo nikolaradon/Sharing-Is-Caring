@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Institution, Category
+from .models import Institution, Category, Donation
 
 # Register your models here.
 
@@ -15,4 +15,8 @@ class InstitutionAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
       list_display = ('name',)
-      
+
+
+@admin.register(Donation)
+class DonationAdmin(admin.ModelAdmin):
+      list_display = ('user',)

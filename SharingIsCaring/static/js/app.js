@@ -170,6 +170,7 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$form = form;
       this.$next = form.querySelectorAll(".next-step");
       this.$prev = form.querySelectorAll(".prev-step");
+      this.$confirm = form.querySelector(".confirm-step");
       this.$step = form.querySelector(".form--steps-counter span");
       this.currentStep = 1;
 
@@ -209,6 +210,14 @@ document.addEventListener("DOMContentLoaded", function() {
           this.updateForm();
         });
       });
+
+      // Confirm button
+      this.$confirm.addEventListener("click", e => {
+        e.preventDefault();
+        console.log("Confirm button clicked");
+        this.$form.querySelector("form").submit();
+        console.log("Form submitted");
+      })
 
       // Form submit
       this.$form.querySelector("form").addEventListener("submit", e => this.submit(e));

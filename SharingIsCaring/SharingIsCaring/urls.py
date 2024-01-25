@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from SharingIsCaringApp.views import (LandingPageView, AddDonationView, LoginView, RegisterView,
-                                      logout_view, UserProfileView
+                                      logout_view, UserProfileView, ConfirmationFormView
                                       )
 
 urlpatterns = [
@@ -27,5 +27,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/', RegisterView.as_view(), name='register'),
     path('logout', logout_view, name='logout'),
-    path('user', UserProfileView.as_view(), name='user-profile')
+    path('user', UserProfileView.as_view(), name='user-profile'),
+    path('confirmation/', ConfirmationFormView.as_view(), name='form-confirmation')
+
 ]

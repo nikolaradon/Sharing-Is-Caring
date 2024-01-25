@@ -40,9 +40,49 @@ class AddDonationView(LoginRequiredMixin, View):
 
     def get(self, request):
         categories = Category.objects.all()
-        insitutions = Institution.objects.all()
-        return render(request, 'form.html', {'categories': categories, 'institutions': insitutions})
+        institutions = Institution.objects.all()
+        return render(request, 'form.html', {'categories': categories, 'institutions': institutions})
+
+    def post(self, request):
+        if request.method == 'POST':
+            quantity = request.POST.get('quantity')
+            categories_ids = request.POST.getlist('categories')
+            institution_id = request.POST.get('institution')
+            address = request.POST.get('address')
+            phone_number = request.POST.get('phone')
+            city = request.POST.get('city')
+            zip_code = request.POST.get('postcode')
+            pick_up_date = request.POST.get('data')
+            pick_up_time = request.POST.get('time')
+            pick_up_comment = request.POST.get('more_info')
+
+            institution = Institution.objects.get(id=institution_id)
+            donation = Donation.objects.create(
+                quantity=quantity,
+                institution=institution,
+                address=address,
+                phone_number=phone_number,
+                city=city,
+                zip_code=zip_code,
+                pick_up_date=pick_up_date,
+                pick_up_time=pick_up_time,
+                pick_up_comment=pick_up_comment,
+                user=request.user
+            )
+
+            for category_id in categories_ids:
+                category = Category.objects.get(id=category_id)
+                donation.categories.add(category)
+
+            donation.save()
+
+            return redirect('form-confirmation')
+
     
+class ConfirmationFormView(View):
+    def get(self, request):
+        return render(request, 'form-confirmation.html')
+
 
 
 class LoginView(View):

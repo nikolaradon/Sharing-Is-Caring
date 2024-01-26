@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.db.models import Sum
 from .models import Donation, Institution, Category
-from .forms import RegisterForm, LoginForm
+from .forms import RegisterForm, LoginForm, EditUserProfileForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -137,3 +137,21 @@ class UserProfileView(View):
     def get(self, request):
         user_donations = Donation.objects.filter(user=request.user)
         return render(request, 'user_profile.html', {'user': request.user, 'user_donations': user_donations})
+    
+
+class EditUserProfileView(LoginRequiredMixin, View):
+    def get(self, request):
+        form = EditUserProfileForm(instance=request.user)
+        return render(request, 'edit_profile.html', {'form': form})
+
+    def post(self, request):
+        form = EditUserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile')
+        return render(request, 'edit_profile.html', {'form': form})
+
+
+class ChangePasswordView(View):
+    def get(self, request):
+        pass

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm, UserChangeForm
 from django.contrib.auth.models import User
-from .models import Donation
+#from django.contrib.auth import get_user_model
 
 class RegisterForm(UserCreationForm):
     class Meta:
@@ -29,6 +29,7 @@ class EditUserProfileForm(UserChangeForm):
         if not user.check_password(password):
             raise forms.ValidationError("Incorrect password.")
         return password
+
 
 
 class ChangePasswordForm(PasswordChangeForm):

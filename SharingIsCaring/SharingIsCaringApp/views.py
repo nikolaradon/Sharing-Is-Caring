@@ -3,11 +3,12 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.db.models import Sum
 from .models import Donation, Institution, Category
-from .forms import RegisterForm, LoginForm, EditUserProfileForm
+from .forms import RegisterForm, LoginForm, EditUserProfileForm, ChangePasswordForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import update_session_auth_hash
 
 
 
@@ -152,6 +153,15 @@ class EditUserProfileView(LoginRequiredMixin, View):
         return render(request, 'edit_profile.html', {'form': form})
 
 
-class ChangePasswordView(View):
+class ChangePasswordView(LoginRequiredMixin, View):
     def get(self, request):
-        pass
+        form = ChangePasswordForm(user=request.user)
+        return render(request, 'change_password.html', {'form': form})
+    
+    def post(self, request):
+        form = ChangePasswordForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, request.user)
+            return redirect('user-profile')
+        return render(request, 'change_password.html', {'form': form})

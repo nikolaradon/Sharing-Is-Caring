@@ -1,0 +1,221 @@
+{% extends 'base.html' %}
+
+{% block title %}Fill out the form{% endblock %}
+
+
+{% block content %}
+      <div class="slogan container container--90">
+        <div class="slogan--item">
+          <h1>
+            Donate things you no longer want<br />
+            <span class="uppercase">to those in need</span>
+          </h1>
+
+          <div class="slogan--steps">
+            <div class="slogan--steps-title">Just 4 simple steps:</div>
+            <ul class="slogan--steps-boxes">
+              <li>
+                <div><em>1</em><span>Choose items</span></div>
+              </li>
+              <li>
+                <div><em>2</em><span>Place them in bags</span></div>
+              </li>
+              <li>
+                <div><em>3</em><span>Select a charity foundation</span></div>
+              </li>
+              <li>
+                <div><em>4</em><span>Order a courier</span></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="form--steps">
+      <div class="form--steps-instructions" id="form">
+        <div class="form--steps-container">
+          <h3>Important!</h3>
+          <p data-step="1" class="active">
+            Provide details about your items. This way, we'll know who needs them the most.
+          </p>
+          <p data-step="2">
+            Fill in details about your items. This way, we'll know who needs them the most.
+          </p>
+          <p data-step="3">
+            Choose one to which your shipment will go.
+          </p>
+          <p data-step="4">Provide the address and pickup date for the courier.</p>
+        </div>
+      </div>
+
+      <div class="form--steps-container">
+        <div class="form--steps-counter">Step <span>1</span>/5</div>
+
+        <form action="{% url 'form' %}" method="post">
+          {% csrf_token %}
+          <!-- STEP 1: class .active is switching steps -->
+          <div data-step="1" class="active">
+            <h3>Select what you want to donate:</h3>
+            {% for category in categories %}
+                <div class="form-group form-group--checkbox">
+                    <label>
+                        <input type="checkbox" name="categories" value="{{ category.id }}" />
+                        <span class="checkbox"></span>
+                        <span class="description">{{ category.name }}</span>
+                    </label>
+                </div>
+            {% endfor %}
+            <div class="form-group form-group--buttons">
+                <button type="button" class="btn next-step">Next</button>
+            </div>
+        </div>
+
+          <!-- STEP 2 -->
+          <div data-step="2">
+            <h3>Specify the number of 60-liter bags in which you packed your items:</h3>
+
+            <div class="form-group form-group--inline">
+              <label>
+                Number of 60-liter bags
+                <input type="number" name="bags" step="1" min="1" />
+              </label>
+            </div>
+
+            <div class="form-group form-group--buttons">
+              <button type="button" class="btn prev-step">Back</button>
+              <button type="button" class="btn next-step">Next</button>
+            </div>
+          </div>
+
+          <!-- STEP 3 -->
+          <div data-step="3">
+            <h3>Choose the organization you want to help:</h3>
+
+            {% for institution in institutions %}
+                <div class="form-group form-group--checkbox" data-categories="{{ institution.categories.all|join:", " }}">
+                    <label>
+                        <input type="radio" name="instituition" value="{{ institution.id }}" />
+                        <span class="checkbox radio"></span>
+                        <span class="description">
+                            <div class="title">{{ institution.name }}</div>
+                            <div class="subtitle">{{ institution.description }}</div>
+                        </span>
+                    </label>
+                </div>
+            {% endfor %}
+
+            <div class="form-group form-group--buttons">
+                <button type="button" class="btn prev-step">Back</button>
+                <button type="button" class="btn next-step">Next</button>
+            </div>
+          </div>
+
+
+          <!-- STEP 4 -->
+          <div data-step="4">
+            <h3>Provide the address and the pickup schedule for the courier:</h3>
+
+            <div class="form-section form-section--columns">
+              <div class="form-section--column">
+                <h4>Pickup Address</h4>
+                <div class="form-group form-group--inline">
+                  <label> Street <input type="text" name="address" /> </label>
+                </div>
+
+                <div class="form-group form-group--inline">
+                  <label> City <input type="text" name="city" /> </label>
+                </div>
+
+                <div class="form-group form-group--inline">
+                  <label>
+                    Postal Code <input type="text" name="postcode" />
+                  </label>
+                </div>
+
+                <div class="form-group form-group--inline">
+                  <label>
+                    Phone Number <input type="phone" name="phone" />
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-section--column">
+                <h4>Pickup Schedule</h4>
+                <div class="form-group form-group--inline">
+                  <label> Date <input type="date" name="data" /> </label>
+                </div>
+
+                <div class="form-group form-group--inline">
+                  <label> Time <input type="time" name="time" /> </label>
+                </div>
+
+                <div class="form-group form-group--inline">
+                  <label>
+                    Courier Notes
+                    <textarea name="more_info" rows="5"></textarea>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group form-group--buttons">
+              <button type="button" class="btn prev-step">Back</button>
+              <button type="button" class="btn next-step">Next</button>
+            </div>
+          </div>
+
+          <!-- STEP 6 -->
+          <div data-step="5">
+            <h3>Summary of your donation</h3>
+
+            <div class="summary">
+              <div class="form-section">
+                <h4>You give away:</h4>
+                <ul>
+                  <li>
+                    <span class="icon icon-bag"></span>
+                    <span class="summary--text"
+                      >4 worki ubrań w dobrym stanie dla dzieci</span
+                    >
+                  </li>
+
+                  <li>
+                    <span class="icon icon-hand"></span>
+                    <span class="summary--text"
+                      >Dla fundacji "Mam marzenie" w Warszawie</span
+                    >
+                  </li>
+                </ul>
+              </div>
+
+              <div class="form-section form-section--columns">
+                <div class="form-section--column">
+                  <h4>Pick up adress:</h4>
+                  <ul>
+                    <li>Prosta 51</li>
+                    <li>Warszawa</li>
+                    <li>99-098</li>
+                    <li>123 456 789</li>
+                  </ul>
+                </div>
+
+                <div class="form-section--column">
+                  <h4>Pick up date:</h4>
+                  <ul>
+                    <li>13/12/2018</li>
+                    <li>15:40</li>
+                    <li>Brak uwag</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-group--buttons">
+              <button type="button" class="btn prev-step">Back</button>
+              <button type="submit" class="btn confirm-step">Confim</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+{% endblock %}

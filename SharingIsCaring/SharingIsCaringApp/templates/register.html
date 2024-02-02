@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block nav_actions %}
+  <header>
+    <nav class="container container--70">
+      <ul class="nav--actions">
+        <li><a href="{% url 'login' %}">Log in</a></li>
+        <li class="highlighted"><a href="{% url 'register' %}">Create an account</a></li>
+      </ul>
+{% endblock %}
+          
+
+{% block content %}
+  <section class="login-page">
+    <h2>Create an account</h2>
+    <form method="post" action="{% url 'register' %}">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <input type="email" name="{{ form.email.name }}" placeholder="Email" />
+        {{ form.email.errors }}
+      </div><br>
+      <div class="form-group">
+        <input type="password" name="{{ form.password1.name }}" placeholder="Password" />
+        {{ form.password1.errors }}
+      </div><br>
+      <div class="form-group">
+        <input type="password" name="{{ form.password2.name }}" placeholder="Repeat Password" />
+        {{ form.password2.errors }}
+      </div><br>
+      <div class="form-group">
+        <input type="text" name="{{ form.first_name.name }}" placeholder="First Name" />
+        {{ form.first_name.errors }}
+      </div><br>
+      <div class="form-group">
+        <input type="text" name="{{ form.last_name.name }}" placeholder="Last Name" />
+        {{ form.last_name.errors }}
+      </div><br>
+
+      <div class="form-group form-group--buttons">
+        <a href="{% url 'login' %}" class="btn btn--without-border">Log in</a>
+        <button class="btn" type="submit">Create an account</button>
+      </div>
+    </form>
+  </section>
+{% endblock %}
+

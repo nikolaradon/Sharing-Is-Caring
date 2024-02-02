@@ -113,19 +113,18 @@ class LoginView(View):
 
 class RegisterView(View):
     def get(self, request):
-            form = RegisterForm()
-            return render(request, "register.html", {'form': form})
+        form = RegisterForm()
+        return render(request, "register.html", {'form': form})
 
     def post(self, request):
         form = RegisterForm(request.POST)
         if form.is_valid():
-            try:
-                user = form.save(commit=False)
-                user.username = form.cleaned_data['email']
-                user.save()
-                return redirect('login')
-            except IntegrityError:
+            email = form.cleaned_data['email']
+            if User.objects.filter(email=email).exists():
                 form.add_error('email', 'User with this email is already registered')
+            else:
+                form.save()
+                return redirect('login')
 
         return render(request, "register.html", {'form': form})
 
